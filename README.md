@@ -27,7 +27,9 @@ Open **[footgunz.github.io/glyphcraft](https://footgunz.github.io/glyphcraft/)**
 
 ### Use it offline
 
-Build it (see below), then open **`dist/glyphcraft.html`** in a browser (double-click it). It is a single self-contained file with every bundled font inside: no install, server or internet needed.
+Download **`glyphcraft-<version>.html`** from the latest [release](https://github.com/footgunz/glyphcraft/releases/latest) and open it in a browser. It's the same app as the website, in one file, with the open-licensed fonts built in.
+
+Or build it yourself (see below), then open **`dist/glyphcraft.html`** in a browser (double-click it). It is a single self-contained file with every bundled font inside: no install, server or internet needed.
 
 To give the app to someone else, send **`dist/glyphcraft-public.html`** instead. It leaves out the personal-use fonts (see [Fonts](#fonts)).
 
