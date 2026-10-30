@@ -166,6 +166,54 @@ button.preset i {
   border: 3px solid;
 }
 
+/* A saved preset and its delete button read as one pill. */
+.user-preset {
+  display: inline-flex;
+}
+
+.user-preset button.preset {
+  border-radius: 6px 0 0 6px;
+}
+
+.user-preset .preset-delete {
+  padding: 0 8px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.user-preset .preset-delete:hover {
+  color: #c62828;
+  border-color: #c62828;
+}
+
+.save-preset {
+  margin-top: 10px;
+}
+
+.save-preset form {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 6px;
+}
+
+.save-preset form[hidden],
+.save-preset button[hidden] {
+  display: none;
+}
+
+.save-preset-error {
+  grid-column: 1 / -1;
+  color: #c62828;
+  font-size: 12px;
+}
+
+.save-preset-error:empty {
+  display: none;
+}
+
 .letters {
   margin-bottom: 8px;
 }

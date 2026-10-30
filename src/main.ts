@@ -14,6 +14,16 @@ import {
   exportLayers,
   layersToSvg,
 } from './render'
+import {
+  KEPT_ON_PRESET,
+  USER_PRESET_GROUP,
+  addUserPreset,
+  loadUserPresets,
+  makeUserPreset,
+  nameProblem,
+  removeUserPreset,
+  storeUserPresets,
+} from './userPresets'
 
 // ---------------------------------------------------------------------------
 // Fonts: everything in src/fonts (open-licensed, always bundled) and
@@ -408,56 +418,133 @@ function renderFontInfo(box: HTMLDetailsElement, name: string) {
   box.append(note)
 }
 
+let userPresets = loadUserPresets(localStorage)
+
 /** Buttons that apply a style preset, grouped, each with a face/body swatch. */
 function presetSection() {
   const sec = section('Presets')
   const groups = [...new Set(PRESETS.map((p) => p.group))]
   for (const g of groups) {
-    const label = document.createElement('div')
-    label.className = 'preset-group'
-    label.textContent = g
-    const wrap = document.createElement('div')
-    wrap.className = 'presets'
-    for (const p of PRESETS.filter((p) => p.group === g)) {
-      const b = document.createElement('button')
-      b.className = 'preset'
-      b.title =
-        `Apply the ${p.label} colors and spacing` +
-        (p.fonts?.length ? ` with the ${p.fonts.join(' font, or else ')} font` : '') +
-        ' (keeps text, background and export settings)'
-      const sw = document.createElement('i')
-      sw.style.background = p.settings.faceColor ?? '#fff'
-      sw.style.borderColor = p.settings.outlineColor ?? '#000'
-      b.append(sw, p.label)
-      b.addEventListener('click', () => applyPreset(p))
-      wrap.append(b)
-    }
-    sec.append(label, wrap)
+    const wrap = presetGroup(sec, g)
+    for (const p of PRESETS.filter((p) => p.group === g)) wrap.append(presetButton(p))
   }
+
+  if (userPresets.length) {
+    const wrap = presetGroup(sec, USER_PRESET_GROUP)
+    for (const p of userPresets) {
+      const item = document.createElement('span')
+      item.className = 'user-preset'
+      const del = document.createElement('button')
+      del.className = 'preset-delete'
+      del.textContent = '×'
+      del.title = `Delete the ${p.label} preset`
+      del.setAttribute('aria-label', del.title)
+      del.addEventListener('click', () => {
+        if (!confirm(`Delete the preset "${p.label}"? This can't be undone.`)) return
+        setUserPresets(removeUserPreset(userPresets, p.id), `Deleted preset "${p.label}"`)
+      })
+      item.append(presetButton(p), del)
+      wrap.append(item)
+    }
+  }
+  sec.append(savePresetForm())
 }
 
-/** Settings a preset never touches. */
-const KEPT_ON_PRESET: (keyof Settings)[] = [
-  'text',
-  'bgColor',
-  'bgInExport',
-  'exportWidth',
-  'exportUnit',
-  'exportMode',
-  'exportGradients',
-  'previewShaded',
-  'regMarks',
-  'weedBox',
-  'removeSmall',
-  'minPieceMm',
-  'pngWidth',
-  'pngTransparent',
-]
+function presetGroup(sec: HTMLElement, title: string): HTMLElement {
+  const label = document.createElement('div')
+  label.className = 'preset-group'
+  label.textContent = title
+  const wrap = document.createElement('div')
+  wrap.className = 'presets'
+  sec.append(label, wrap)
+  return wrap
+}
+
+function presetButton(p: Preset): HTMLButtonElement {
+  const b = document.createElement('button')
+  b.className = 'preset'
+  b.title =
+    `Apply the ${p.label} colors and spacing` +
+    (p.fonts?.length ? ` with the ${p.fonts.join(' font, or else ')} font` : '') +
+    ' (keeps text, background and export settings)'
+  const sw = document.createElement('i')
+  sw.style.background = p.settings.faceColor ?? '#fff'
+  sw.style.borderColor = p.settings.outlineColor ?? '#000'
+  b.append(sw, p.label)
+  b.addEventListener('click', () => applyPreset(p))
+  return b
+}
+
+/** "Save as preset…", which opens a name field in place. */
+function savePresetForm(): HTMLElement {
+  const box = document.createElement('div')
+  box.className = 'save-preset'
+  const open = document.createElement('button')
+  open.textContent = 'Save as preset…'
+  open.title = 'Save the current font and style (not the text or export settings) as a new preset'
+
+  const form = document.createElement('form')
+  form.hidden = true
+  const name = document.createElement('input')
+  name.type = 'text'
+  name.placeholder = 'Preset name'
+  name.maxLength = 40
+  name.setAttribute('aria-label', 'Preset name')
+  const save = document.createElement('button')
+  save.type = 'submit'
+  save.className = 'primary'
+  save.textContent = 'Save'
+  const cancel = document.createElement('button')
+  cancel.type = 'button'
+  cancel.textContent = 'Cancel'
+  const error = document.createElement('div')
+  error.className = 'save-preset-error'
+  error.setAttribute('role', 'alert')
+  form.append(name, save, cancel, error)
+
+  const show = (editing: boolean) => {
+    form.hidden = !editing
+    open.hidden = editing
+    error.textContent = ''
+    if (editing) {
+      name.value = ''
+      name.focus()
+    }
+  }
+  open.addEventListener('click', () => show(true))
+  cancel.addEventListener('click', () => show(false))
+  name.addEventListener('keydown', (e) => e.key === 'Escape' && show(false))
+  name.addEventListener('input', () => (error.textContent = ''))
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const problem = nameProblem(name.value, userPresets)
+    if (problem) {
+      error.textContent = problem
+      name.focus()
+      return
+    }
+    const preset = makeUserPreset(name.value, settings, fontName)
+    setUserPresets(addUserPreset(userPresets, preset), `Saved preset "${preset.label}"`)
+  })
+  box.append(open, form)
+  return box
+}
+
+/** Replace the saved presets, store them and redraw the panel; `done` is shown if storing worked. */
+function setUserPresets(next: Preset[], done: string) {
+  userPresets = next
+  buildControls()
+  if (storeUserPresets(localStorage, next)) setStatus(done)
+  else setStatus('This browser would not keep presets (private mode or storage full); they last until you close the page', true)
+}
 
 function applyPreset(p: Preset) {
   const kept = Object.fromEntries(KEPT_ON_PRESET.map((k) => [k, settings[k]]))
   settings = { ...DEFAULTS, ...p.settings, ...kept }
-  fontName = firstInstalled(p.fonts) ?? fontName
+  const font = firstInstalled(p.fonts)
+  // A saved preset may name a font added in another session; keep the current one then.
+  if (p.fonts?.length && !font) setTimeout(() => setStatus(`Font "${p.fonts![0]}" isn't available here; kept ${fontName}`, true), 400)
+  fontName = font ?? fontName
   buildControls()
   schedule()
 }
