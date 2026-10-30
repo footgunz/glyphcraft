@@ -98,6 +98,8 @@ async function loadBundledFonts() {
 // Settings persistence (per-browser convenience only)
 // ---------------------------------------------------------------------------
 
+const SOURCE_URL = 'https://github.com/footgunz/glyphcraft'
+
 const STORE_KEY = 'glyphcraft.settings'
 function loadSettings(): Settings {
   try {
@@ -263,7 +265,10 @@ function buildControls() {
 
   const head = document.createElement('div')
   head.className = 'brand'
-  head.innerHTML = `<h1>Glyphcraft</h1>`
+  // The AGPL asks that people using the app can find its source.
+  head.innerHTML =
+    `<h1><a href="${SOURCE_URL}" target="_blank" rel="noopener noreferrer" title="Glyphcraft on GitHub">Glyphcraft</a></h1>` +
+    `<a class="source-link" href="${SOURCE_URL}" target="_blank" rel="noopener noreferrer">Source code</a>`
   controlsEl.append(head)
   presetSection()
 

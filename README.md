@@ -4,6 +4,19 @@ Turn a word into a chunky, layered "3D" game-style logo and export it as a **cut
 
 Type some text, pick a font and a style preset, bend and tweak the letters, then download. The SVG is made of real closed shapes (no strokes or effects), split into one layer per vinyl color, with registration marks and a weeding box, so it imports cleanly into Cricut Design Space or any other cutter software.
 
+## License, in plain English
+
+**The code** is under the [GNU AGPL v3](LICENSE). Use it, change it, share it, host it for your friends. The one rule: if you run a modified version for other people, especially as a website, you have to share your source code with them under the same license. So nobody gets to take Glyphcraft, lock it behind a paywall and keep the code to themselves.
+
+**Your designs are yours.** Anything you make with Glyphcraft (logos, SVGs, PNGs, the decals you cut from them) belongs to you. Keep it, give it away, sell it. The AGPL covers this app's code, not what you create with it.
+
+**Fonts have their own licenses, not this one.** Every font is covered only by its own license, and that's what decides what you can do with it:
+
+- `src/fonts/` holds fonts that are fine to share: open-licensed ones (SIL Open Font License, or Apache 2.0 for Luckiest Guy) plus Upheaval, which is freeware you can pass along with its license file but not sell. Their licenses are in `src/fonts/licenses/` and show up in the app under **About this font**.
+- `src/fonts-private/` is for fonts you add yourself. It's empty in this repo on purpose. Whatever you put there is yours to sort out, and many fan-made fonts are personal use only, so check before you share or sell anything made with them.
+
+**Preset styles** nod to some well-known games and stories, but they're just colors and shapes with generic names. Nothing here is official or endorsed by anyone.
+
 ## Quick start
 
 ### Just use it
@@ -38,6 +51,17 @@ npm run build:public
 Writes `dist/glyphcraft-public.html` with only the open-licensed fonts, safe to share. Presets automatically fall back to open fonts in it.
 
 Rebuild after adding fonts or changing code; `dist/` is not committed. To try the public version while developing, run `npm run dev -- --mode public`.
+
+### Publish to GitHub Pages
+
+`.github/workflows/pages.yml` builds the public version and publishes it to GitHub Pages every time a **release is published** in the GitHub UI (it can also be run by hand from the **Actions** tab). Only open-licensed fonts are ever published; private fonts are not in the repo.
+
+One-time setup in the repository settings:
+
+1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**.
+2. **Settings → Environments → github-pages → Deployment branches and tags:** add a tag rule such as `v*` (or allow all), because releases deploy from their tag.
+
+Then create a release (for example tag `v1.0.0`) and the site appears at `https://<user>.github.io/glyphcraft/`. On a free GitHub plan, Pages requires the repository to be public.
 
 ## Using the app
 
@@ -151,9 +175,3 @@ Preset fonts and their fallbacks:
 | `vite.config.ts` | Builds everything into one HTML file; `--mode public` leaves out `src/fonts-private` |
 
 Outlines are true polygon offsets and the extrusion is an exact sweep of the outlined shape, so every layer is one clean `<path>` of closed, non-overlapping contours. Layers are written as Inkscape layers (`<g inkscape:groupmode="layer">`) so Inkscape also shows them as separate layers.
-
-## Licenses and trademarks
-
-The fonts in `src/fonts/` are open-licensed (SIL Open Font License 1.1, or Apache 2.0 for Luckiest Guy) except Upheaval, which is freeware that may be shared with its text file but not sold. Their license files are in `src/fonts/licenses/`.
-
-The fonts in `src/fonts-private/` are fan-made or commercial fonts, mostly for personal use only. Check each one's license before sharing anything that contains it or selling what you make with it. Preset names are generic, but the styles nod to well-known brands; don't present anything made with them as official.
