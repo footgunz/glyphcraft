@@ -1,6 +1,6 @@
 # Glyphcraft
 
-Turn a word into a chunky, layered "3D" game-style logo and export it as a **cut-ready SVG** for vinyl decals, or as a PNG for printing and sharing.
+Turn a word into a chunky, layered "3D" logo and export it as a **cut-ready SVG** for vinyl decals, or as a PNG for printing and sharing.
 
 Type some text, pick a font and a style preset, bend and tweak the letters, then download. The SVG is made of real closed shapes (no strokes or effects), split into one layer per vinyl color, with registration marks and a weeding box, so it imports cleanly into Cricut Design Space or any other cutter software.
 
@@ -79,7 +79,7 @@ The left panel is the controls; the right side is a live preview. Settings are r
 ### 2. Text and font
 
 - **Font**: grouped into *Your fonts (personal use)* and *Open-licensed (OK to share)*. **Add font…** loads a `.ttf`, `.otf` or `.woff` for this session. **About this font** shows the copyright, designer and license details stored in the font, plus its bundled license file.
-- **Text**: multiple lines are fine. Mixing upper and lower case is part of the look in many game logos.
+- **Text**: multiple lines are fine. Mixing upper and lower case can add a playful look.
 - **Letter spacing**: negative values make letters overlap.
 - **Overlaps**: when letters overlap, *Separate* keeps each letter's own outline so they read like stacked stickers (choose whether left or right letters sit on top); *Merge* blends touching letters into one shape.
 
