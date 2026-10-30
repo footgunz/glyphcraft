@@ -30,6 +30,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm test
       - run: npm run build:public
       - name: Attach to release
         if: github.event_name == 'release'
