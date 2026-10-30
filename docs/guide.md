@@ -85,13 +85,3 @@ Cutting helpers, all on by default:
 - **Remove pieces too small to weed**: drops pieces and holes smaller across than **Smallest piece (mm)**. In the cut preview, removed pieces show in red and the status bar counts them.
 
 **Download PNG** renders what the preview shows at **PNG image → Width (px)**, with a transparent background unless you turn that off.
-
-## Updating the images
-
-The screenshot and animations in [`assets/`](assets/) are recorded from the public build (open-licensed fonts only). After changing the UI, regenerate them with:
-
-```bash
-npm run docs:screenshots
-```
-
-Add shot names (for example `-- warps presets`) to redo only those. It uses an installed Chrome or Edge; set `CHROME_PATH` to pick a specific browser.

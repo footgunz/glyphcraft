@@ -60,6 +60,16 @@ Writes `dist/glyphcraft-public.html` with only the open-licensed fonts, safe to 
 
 Rebuild after adding fonts or changing code; `dist/` is not committed. To try the public version while developing, run `npm run dev -- --mode public`.
 
+### Docs images
+
+The screenshot and animations in [`docs/assets/`](docs/assets/) are recorded from the public build (open-licensed fonts only). After changing the UI, regenerate them with:
+
+```bash
+npm run docs:screenshots
+```
+
+Add shot names (for example `-- warps presets`) to redo only those. It needs Node.js 22.18+ and an installed Chrome or Edge; set `CHROME_PATH` to pick a specific browser.
+
 ## Fonts
 
 Fonts live in two folders, and appear in the font list automatically, named after the file:
