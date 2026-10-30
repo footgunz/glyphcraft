@@ -328,7 +328,7 @@ export const PRESETS: Preset[] = [
 ]
 
 export const DEFAULTS: Settings = {
-  text: 'Game Over',
+  text: 'Glyphcraft',
   letterSpacing: 0,
   lineHeight: 1.05,
   align: 'center',
