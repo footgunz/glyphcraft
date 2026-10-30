@@ -6,12 +6,12 @@ import { viteSingleFile } from 'vite-plugin-singlefile'
 /**
  * The version shown in the app: the release tag when the release workflow sets
  * GLYPHCRAFT_VERSION, otherwise what git says about this checkout (a tag, or
- * e.g. v0.0.4-3-gabc1234-dirty between releases), or "dev" without git.
+ * e.g. v0.0.4-3-gabc1234 between releases), or "dev" without git.
  */
 function appVersion(): string {
   if (process.env.GLYPHCRAFT_VERSION) return process.env.GLYPHCRAFT_VERSION
   try {
-    return execSync('git describe --tags --always --dirty', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()
+    return execSync('git describe --tags --always', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()
   } catch {
     return 'dev'
   }
