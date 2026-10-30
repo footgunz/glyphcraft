@@ -4,11 +4,15 @@ A walkthrough of the app, from picking a style to downloading a file you can cut
 
 Once your SVG is ready, see [Cutting with Cricut Design Space](cricut.md).
 
+![The Glyphcraft window](assets/overview.png)
+
 The left panel is the controls; the right side is a live preview. Settings are remembered in your browser between visits.
 
 ## 1. Pick a preset
 
 **Presets** set the colors, layer sizes, spacing and letter play in one click, and switch to a matching font: each preset lists fonts in order of preference and uses the first one installed, so it picks a personal-use font when you have it and an open-licensed one otherwise. They keep your text, background and export settings.
+
+![Clicking through presets restyles the whole design](assets/presets.gif)
 
 | Group | Presets |
 | --- | --- |
@@ -22,12 +26,20 @@ The left panel is the controls; the right side is a live preview. Settings are r
 - **Letter spacing**: negative values make letters overlap.
 - **Overlaps**: when letters overlap, *Separate* keeps each letter's own outline so they read like stacked stickers (choose whether left or right letters sit on top); *Merge* blends touching letters into one shape.
 
+![Squeezing letters together, then switching between right on top, left on top and merge](assets/overlaps.gif)
+
 ## 3. Shape it
 
 - **Width / Height** stretch the whole text.
 - **Warp**: Arc, Arch, Arc upper/lower, Bulge, Fisheye, Wave, Rise or Perspective, with a **Bend** amount. A negative Bulge pinches the middle so the end letters come out biggest.
+
+![Sweeping Bend through the Arch, Arc, Bulge and Wave warps](assets/warps.gif)
+
 - **Tilt letters / Tilt angle**: rotate specific letters. `e` also matches é, è, ê and ë.
 - **Wobble all / Bounce all**: alternate rotation and baseline up and down across letters for a playful feel.
+
+![Tilting the A, then adding wobble and bounce](assets/letter-play.gif)
+
 - **Per letter**: one row per letter to **Rotate**, **Shift** left/right, **Raise** and **Size** it by hand. Rows follow letter position, so editing earlier text shifts them; use **Reset all letters** if that happens.
 
 Double-click any slider to reset it.
@@ -46,11 +58,15 @@ Each design is built from these layers, bottom to top:
 
 The B layers can be turned off individually. The face can use a gradient, which shows in the preview and PNG; cutters ignore it.
 
+![Swinging the 3D extrusion angle around](assets/extrusion.gif)
+
 ## 5. Check what will be cut
 
 - Turn off **Preview shaded 3D** to see exactly what goes into the SVG.
 - Click the **Color A / Color B** chips above the preview to hide or show a layer in place.
 - **Background** sets the preview color, and can optionally be added to the SVG as a rectangle layer.
+
+![Switching to the cut view, then hiding each color in turn](assets/cut-check.gif)
 
 ## 6. Export
 

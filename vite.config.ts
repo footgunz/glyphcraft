@@ -14,7 +14,10 @@ function renameOutput(name: string): Plugin {
 }
 
 export default defineConfig(({ mode }) => ({
-  server: { port: 5173 },
+  // docs/ (guides and screenshots) is never part of the app: don't scan it for
+  // dependencies or reload the dev server when it changes.
+  optimizeDeps: { entries: ['index.html'] },
+  server: { port: 5173, watch: { ignored: ['**/docs/**'] } },
   build: {
     // Keep the other build's file when building one of the two variants.
     emptyOutDir: false,

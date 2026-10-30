@@ -35,7 +35,7 @@ To give the app to someone else, send **`dist/glyphcraft-public.html`** instead.
 
 ### Develop
 
-Requires [Node.js](https://nodejs.org/) 20.19+ or 22.12+ (current LTS recommended).
+Requires [Node.js](https://nodejs.org/) 22.18+ or 24+ (current LTS recommended).
 
 ```bash
 npm install
@@ -59,6 +59,16 @@ npm run build:public
 Writes `dist/glyphcraft-public.html` with only the open-licensed fonts, safe to share. Presets automatically fall back to open fonts in it.
 
 Rebuild after adding fonts or changing code; `dist/` is not committed. To try the public version while developing, run `npm run dev -- --mode public`.
+
+### Updating the guide images
+
+The screenshot and animations in the [user guide](docs/guide.md) live in [`docs/assets/`](docs/assets/) and are recorded from the public build (open-licensed fonts only). After changing the UI, regenerate them with:
+
+```bash
+npm run docs:screenshots
+```
+
+Add shot names (for example `-- warps presets`) to redo only those. It needs an installed Chrome or Edge; set `CHROME_PATH` to pick a specific browser.
 
 ## Fonts
 
