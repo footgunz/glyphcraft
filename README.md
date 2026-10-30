@@ -60,9 +60,9 @@ Writes `dist/glyphcraft-public.html` with only the open-licensed fonts, safe to 
 
 Rebuild after adding fonts or changing code; `dist/` is not committed. To try the public version while developing, run `npm run dev -- --mode public`.
 
-### Docs images
+### Updating the guide images
 
-The screenshot and animations in [`docs/assets/`](docs/assets/) are recorded from the public build (open-licensed fonts only). After changing the UI, regenerate them with:
+The screenshot and animations in the [user guide](docs/guide.md) live in [`docs/assets/`](docs/assets/) and are recorded from the public build (open-licensed fonts only). After changing the UI, regenerate them with:
 
 ```bash
 npm run docs:screenshots
