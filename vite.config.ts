@@ -1,6 +1,21 @@
+import { execSync } from 'node:child_process'
 import { renameSync } from 'node:fs'
 import { defineConfig, type Plugin } from 'vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
+
+/**
+ * The version shown in the app: the release tag when the release workflow sets
+ * GLYPHCRAFT_VERSION, otherwise what git says about this checkout (a tag, or
+ * e.g. v0.0.4-3-gabc1234 between releases), or "dev" without git.
+ */
+function appVersion(): string {
+  if (process.env.GLYPHCRAFT_VERSION) return process.env.GLYPHCRAFT_VERSION
+  try {
+    return execSync('git describe --tags --always', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()
+  } catch {
+    return 'dev'
+  }
+}
 
 /** Name the single-file build something worth sharing instead of index.html. */
 function renameOutput(name: string): Plugin {
@@ -14,6 +29,7 @@ function renameOutput(name: string): Plugin {
 }
 
 export default defineConfig(({ mode }) => ({
+  define: { __APP_VERSION__: JSON.stringify(appVersion()) },
   // docs/ (guides and screenshots) is never part of the app: don't scan it for
   // dependencies or reload the dev server when it changes.
   optimizeDeps: { entries: ['index.html'] },

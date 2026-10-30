@@ -279,6 +279,7 @@ function buildControls() {
   head.innerHTML =
     `<h1><a href="${SOURCE_URL}" target="_blank" rel="noopener noreferrer" title="Glyphcraft on GitHub">Glyphcraft</a></h1>` +
     `<a class="source-link" href="${SOURCE_URL}" target="_blank" rel="noopener noreferrer">Source code</a>`
+  head.querySelector('h1')!.append(' ', versionTag())
   controlsEl.append(head)
   presetSection()
 
@@ -334,6 +335,21 @@ function buildControls() {
     if (s.title === 'Scale & warp') perLetterSection()
   }
   refresh()
+}
+
+/** The build's version; a release build links to its release notes. */
+function versionTag(): HTMLElement {
+  const isRelease = /^v\d+(\.\d+)*$/.test(__APP_VERSION__)
+  const tag = document.createElement(isRelease ? 'a' : 'span')
+  tag.className = 'version'
+  tag.textContent = __APP_VERSION__
+  tag.title = isRelease ? `Release ${__APP_VERSION__}: what's new` : `Development build (${__APP_VERSION__})`
+  if (tag instanceof HTMLAnchorElement) {
+    tag.href = `${SOURCE_URL}/releases/tag/${encodeURIComponent(__APP_VERSION__)}`
+    tag.target = '_blank'
+    tag.rel = 'noopener noreferrer'
+  }
+  return tag
 }
 
 /** Name-table fields worth showing, in display order. */

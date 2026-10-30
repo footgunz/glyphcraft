@@ -25,6 +25,8 @@ jobs:
       contents: write # to attach the file to the release
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # tags, so manual runs can describe their version
       - uses: actions/setup-node@v7
         with:
           node-version: 24
@@ -32,6 +34,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build:public
+        env:
+          # Shown in the app; empty on manual runs, which fall back to git describe.
+          GLYPHCRAFT_VERSION: ${{ github.event.release.tag_name }}
       - name: Attach to release
         if: github.event_name == 'release'
         env:

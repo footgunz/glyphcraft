@@ -335,7 +335,13 @@ async function cutCheck(browser: Browser) {
 
 async function main() {
   mkdirSync(OUT, { recursive: true })
-  const server = await createServer({ mode: 'public', server: { port: 5199, strictPort: true }, logLevel: 'warn' })
+  const server = await createServer({
+    mode: 'public',
+    // A blank version label, so the images don't date themselves.
+    define: { __APP_VERSION__: '""' },
+    server: { port: 5199, strictPort: true },
+    logLevel: 'warn',
+  })
   await server.listen()
   const browser = await chromium.launch({ executablePath: findBrowser() })
   try {
