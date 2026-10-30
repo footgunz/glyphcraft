@@ -35,7 +35,7 @@ To give the app to someone else, send **`dist/glyphcraft-public.html`** instead.
 
 ### Develop
 
-Requires [Node.js](https://nodejs.org/) 20.19+ or 22.12+ (current LTS recommended).
+Requires [Node.js](https://nodejs.org/) 22.18+ or 24+ (current LTS recommended).
 
 ```bash
 npm install
@@ -68,7 +68,7 @@ The screenshot and animations in [`docs/assets/`](docs/assets/) are recorded fro
 npm run docs:screenshots
 ```
 
-Add shot names (for example `-- warps presets`) to redo only those. It needs Node.js 22.18+ and an installed Chrome or Edge; set `CHROME_PATH` to pick a specific browser.
+Add shot names (for example `-- warps presets`) to redo only those. It needs an installed Chrome or Edge; set `CHROME_PATH` to pick a specific browser.
 
 ## Fonts
 
