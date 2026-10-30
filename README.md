@@ -58,6 +58,8 @@ npm run build:public
 
 Writes `dist/glyphcraft-public.html` with only the open-licensed fonts, safe to share. Presets automatically fall back to open fonts in it.
 
+The version shows next to the title in the app. Release builds show the release tag (e.g. `v0.0.5`), linked to its release notes; other builds show `git describe` output such as `v0.0.4-3-gabc1234-dirty`, which counts commits since the last tag and flags uncommitted changes.
+
 Rebuild after adding fonts or changing code; `dist/` is not committed. To try the public version while developing, run `npm run dev -- --mode public`.
 
 ### Updating the guide images
