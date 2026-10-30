@@ -19,6 +19,14 @@ The left panel is the controls; the right side is a live preview. Settings are r
 | Video game | Pocket Monster, Block Grass, Block Creeper, 8-bit console, Cyberpunk |
 | Magic | Scarlet Lion, Emerald Serpent, Sapphire Raven, Honey Badger |
 
+### Your own presets
+
+**Save as preset…** keeps the current font and style under a name of your choice, in a **User presets** group below the built-in ones. Like the built-in presets, it leaves out the text, background and export settings. Names must be unique, and can't match a built-in preset.
+
+Saved presets can't be changed in place: apply one, adjust it, and save the result under a new name. The **×** next to a saved preset deletes it.
+
+Saved presets live in this browser only. If one uses a font that isn't loaded (for example one added with **Add font…** in an earlier visit), applying it keeps the current font.
+
 ## 2. Text and font
 
 - **Font**: grouped into *Your fonts (personal use)* and *Open-licensed (OK to share)*. **Add font…** loads a `.ttf`, `.otf` or `.woff` for this session. **About this font** shows the copyright, designer and license details stored in the font, plus its bundled license file.
