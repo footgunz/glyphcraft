@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process'
-import { renameSync } from 'node:fs'
+import { renameSync, writeFileSync } from 'node:fs'
 import { defineConfig, type Plugin } from 'vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
 
@@ -28,8 +28,24 @@ function renameOutput(name: string): Plugin {
   }
 }
 
+/**
+ * Write dist/version.json next to the app. The published app fetches it,
+ * bypassing caches, to notice it's an older copy and load the new release.
+ */
+function versionFile(version: string): Plugin {
+  return {
+    name: 'version-file',
+    apply: 'build',
+    closeBundle() {
+      writeFileSync('dist/version.json', JSON.stringify({ version }) + '\n')
+    },
+  }
+}
+
+const version = appVersion()
+
 export default defineConfig(({ mode }) => ({
-  define: { __APP_VERSION__: JSON.stringify(appVersion()) },
+  define: { __APP_VERSION__: JSON.stringify(version) },
   // docs/ (guides and screenshots) is never part of the app: don't scan it for
   // dependencies or reload the dev server when it changes.
   optimizeDeps: { entries: ['index.html'] },
@@ -41,5 +57,9 @@ export default defineConfig(({ mode }) => ({
   // Everything, fonts included, is inlined into one HTML file that opens
   // straight from disk with no server or Node.js. `--mode public` leaves out
   // src/fonts-private so the file is safe to share.
-  plugins: [viteSingleFile(), renameOutput(mode === 'public' ? 'glyphcraft-public.html' : 'glyphcraft.html')],
+  plugins: [
+    viteSingleFile(),
+    renameOutput(mode === 'public' ? 'glyphcraft-public.html' : 'glyphcraft.html'),
+    versionFile(version),
+  ],
 }))

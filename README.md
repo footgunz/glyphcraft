@@ -62,6 +62,22 @@ The version shows next to the title in the app. Release builds show the release 
 
 Rebuild after adding fonts or changing code; `dist/` is not committed. To try the public version while developing, run `npm run dev -- --mode public`.
 
+### Test
+
+```bash
+npm test
+```
+
+Runs the geometry, cutting, rendering, preset and update-check tests with [Vitest](https://vitest.dev/).
+
+```bash
+npx playwright install chromium
+npm run build:public
+npm run test:e2e
+```
+
+Runs browser tests with [Playwright](https://playwright.dev/) against the built `dist/glyphcraft-public.html`. They open it from disk like a user would, and also serve it from a pretend site to check that a cached older copy loads the new release. Install Chromium once; rebuild before each run so the tests see your changes.
+
 ### Updating the guide images
 
 The screenshot and animations in the [user guide](docs/guide.md) live in [`docs/assets/`](docs/assets/) and are recorded from the public build (open-licensed fonts only). After changing the UI, regenerate them with:

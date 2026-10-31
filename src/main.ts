@@ -24,6 +24,7 @@ import {
   removeUserPreset,
   storeUserPresets,
 } from './userPresets'
+import { checkForUpdate } from './update'
 
 // ---------------------------------------------------------------------------
 // Fonts: everything in src/fonts (open-licensed, always bundled) and
@@ -931,6 +932,8 @@ document.getElementById('copy')!.addEventListener('click', async () => {
 
 // ---------------------------------------------------------------------------
 
+// Started before the fonts load, so a stale copy moves on to the new release sooner.
+void checkForUpdate(__APP_VERSION__)
 const [failedFonts] = await Promise.all([loadBundledFonts(), loadLicenses()])
 const savedFont = (() => {
   try {

@@ -6,3 +6,5 @@ font-candidates
 # Personal-use fonts stay local; only the placeholder README is tracked.
 src/fonts-private/*
 !src/fonts-private/README.md
+test-results/
+playwright-report/
